@@ -29,7 +29,6 @@
       </div>
 
       <!-- 左边-->
-      <v-Menu></v-Menu>
 
       <!--右侧中部-->
       <div class="right">
@@ -46,7 +45,6 @@
 </template>
 
 <script>
-    import vMenu from '../views/LeftMenu';
     export default {
         name: "Main",
         components:{
