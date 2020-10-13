@@ -1,228 +1,107 @@
 <template>
-  <div>
-      <!-- 头部 -->
-      <div class="header clearfix">
-          <ul class="fr">
-              <li class="dmovo_js">
-                  <i class="iconin icon_h_xt"></i>系统设置
-                  <div class="poptopbar_name dmbox">
-                      <a href="pages/admin.html">
-                          <i class="iconin icon_name4"></i>管理员
-                      </a>
-                  </div>
-              </li>
-              <li class="dmovo_js">
-                  <i class="iconin icon_h_name"></i>Admin
-                  <div class="poptopbar_name dmbox">
-                      <a href="pages/person.html">
-                          <i class="iconin icon_name1"></i>个人资料
-                      </a>
-                      <a href="javascript:;" id="passwordModalA">
-                          <i class="iconin icon_name2"></i>修改密码
-                      </a>
-                      <a href="javascript:;">
-                          <i class="iconin icon_name3"></i>退出登录
-                      </a>
-                  </div>
-              </li>
-          </ul>
-      </div>
+    <a-layout id="components-layout-demo-custom-trigger" style="min-height: 100vh">
+        <!--左侧菜单-->
+        <left-menu ref="leftMenu"></left-menu>
+        <a-layout>
+            <a-layout-header style="padding: 0;">
+                <div class="header">
+                    <!--选择框-->
+                    <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="ifOpen"/>
+                    <span>欢迎光临ERP管理系统</span>
+                    <right-header></right-header>
+                </div>
+            </a-layout-header>
+            <a-layout>
+                <a-layout-header :style="{background: '#fff',height:'54px'}">
+                    <tag-layout>    </tag-layout>
+                </a-layout-header>
+                <a-layout-content :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
+                    <router-view></router-view>
+                </a-layout-content>
+                <a-layout-footer style="textAlign: center">
+                    Ant Design ©2018 Created by Ant UED
+                </a-layout-footer>
+            </a-layout>
 
-      <!-- 左边-->
+        </a-layout>
 
-      <!--右侧中部-->
-      <div class="right">
-          <main class="content">
-             <div style="">
-
-             </div>
-          </main>
-          <footer class="footer">
-
-          </footer>
-      </div>
-  </div>
+    </a-layout>
 </template>
 
 <script>
+    import LeftMenu from "./menu/LeftMenu";
+    import RightHeader from "./header/RightHeader"
+    import TagLayout from "./header/TagLayout";
+
     export default {
         name: "Main",
-        components:{
-            vMenu
-        }
+        components: {
+            LeftMenu,
+            RightHeader,
+            TagLayout
+        },
+
+        data() {
+            return {
+                collapsed: false,
+            };
+        },
+        created() {
+            this.initial();
+        },
+        methods: {
+            ifOpen() {
+                this.$refs.leftMenu.ifOpen();
+            },
+            initial() {
+
+                console.log("main",this.$route.path);
+
+                if(this.$route.path == '/main'){
+                    console.log("123");
+                    this.$router.push("/home")
+                }else{
+                    console.log("12355");
+                    this.$router.push(this.$route.path)
+                }
+            },
+            onClick({key}) {
+                console.log(`Click on item ${key}`);
+            },
+        },
     }
 </script>
 
 <style scoped>
-    /*头部*/
-    .header{
-        height: 50px;
-        width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 100;
-        background: #fff;
-        box-shadow: 0 0 6px rgba(0,0,0,.1); /*添加阴影*/
-        padding: 0 40px;
-        position: fixed; /*根据窗口绝对定位*/
+
+    .header {
+        background-color: #1890ff;
+        z-index: 2;
+        color: white;
+        height: 64px;
+        transition: background 300ms;
     }
 
-    /*li*/
-    .header>ul>li {
-        float: left;
-        height: 50px;
-        line-height: 50px;
-        vertical-align: middle;
-        padding: 0 8px;
+    #components-layout-demo-custom-trigger .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
         cursor: pointer;
-        position: relative;
+        transition: color 0.3s;
     }
 
-    /*a 相当于下拉框*/
-    .header>ul>li .dmbox a {
-        height: 40px;
-        line-height: 40px;
-        padding-left: 11px;
-        color: #5e5e5e;
-        display: block;
-    }
-
-    /*两个圆*/
-    .header>ul>li .icon_h_xt {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #00ba4e;
-        margin-right: 6px;
-    }
-    /*把li标记变成inline-block*/
-    .iconin {
-        display: inline-block; /*变为行内快元素*/
-        vertical-align: middle;
-        width: 16px;
-        height: 16px;
-        margin-right: 6px;
-    }
-
-    /*li 的下拉框实际*/
-    .header>ul>li .dmbox {
-        position: absolute;
-        z-index: 30;  /*：Z-index 仅能在定位元素上奏效（例如 position:absolute;）！ 设置成30 比父元素优先级高*/
-        left: 0;
-        top: 50px;
-        background-color: #fff;
-        border: 1px solid #dcdee1;
-        border-top: 0;
-        width: 100px;
-        /* display: flow-root; *//*就是说使用这个属性之后，该元素会生成一个块级容器框，并且使用的是流布局。为里面内容创建新的块级格式化上下文。*/
-        display: none;
-        border-radius: 0 0 6px 6px;
-    }
-
-    .icon_name4{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name1{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name2{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name3{
-        background-image: url(../assets/images/home/icon_log4.png);
+    #components-layout-demo-custom-trigger .trigger:hover {
+        color: #1890ff;
     }
 
 
-    /*头部*/
-    .header{
-        height: 50px;
-        width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 100;
-        background: #fff;
-        box-shadow: 0 0 6px rgba(0,0,0,.1); /*添加阴影*/
-        padding: 0 40px;
-        position: fixed; /*根据窗口绝对定位*/
+    #components-layout-demo-custom-trigger .trigger[data-v-c1f1971a]:hover {
+        color: #2c3033;
     }
 
-    /*li*/
-    .header>ul>li {
-        float: left;
-        height: 50px;
-        line-height: 50px;
-        vertical-align: middle;
-        padding: 0 8px;
-        cursor: pointer;
-        position: relative;
-    }
+</style>
 
-    /*a 相当于下拉框*/
-    .header>ul>li .dmbox a {
-        height: 40px;
-        line-height: 40px;
-        padding-left: 11px;
-        color: #5e5e5e;
-        display: block;
-    }
-    /*显示下拉框*/
-    .header>ul>li:hover .dmbox{
-        display: block;
-    }
-    /*下拉框鼠标经过按钮*/
-    .header>ul>li .dmbox a:hover {
-        background-color: #f0f0f0;
-    }
-    /*两个圆*/
-    .header>ul>li .icon_h_name,
-    .header>ul>li .icon_h_xt{
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color:#00ba4e;
-        margin-right: 6px;
-    }
-    /*系统配置的按钮颜色*/
-    .header>ul>li .icon_h_xt{
-        background-color:#009ad8;
-    }
+<style lang="less">
 
-
-    /*把li标记变成inline-block*/
-    .iconin {
-        display: inline-block; /*变为行内快元素*/
-        vertical-align: middle;
-        width: 16px;
-        height: 16px;
-        margin-right: 6px;
-    }
-
-    /*li 的下拉框实际*/
-    .header>ul>li .dmbox {
-        position: absolute;
-        z-index: 30;  /*：Z-index 仅能在定位元素上奏效（例如 position:absolute;）！ 设置成30 比父元素优先级高*/
-        left: 0;
-        top: 50px;
-        background-color: #fff;
-        border: 1px solid #dcdee1;
-        border-top: 0;
-        width: 100px;
-        /* display: flow-root; *//*就是说使用这个属性之后，该元素会生成一个块级容器框，并且使用的是流布局。为里面内容创建新的块级格式化上下文。*/
-        display: none;
-        border-radius: 0 0 6px 6px;
-    }
-
-    .icon_name4{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name1{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name2{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
-    .icon_name3{
-        background-image: url(../assets/images/home/icon_log4.png);
-    }
 
 </style>

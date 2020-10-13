@@ -41,11 +41,11 @@
               userName:"",
               pwd:""
             }
-
         },
         methods:{
             sumbit(){
-                this.$router.push("/main");
+                /*登入到主页*/
+                this.$router.push("/home");
             }
         }
     }
@@ -124,7 +124,6 @@
         text-align: center;
         margin: 30px auto;
     }
-
     /*与用户登入分离，里面包含用户，密码，按钮*/
     .user-b{
         /* background: #f10215;*/
@@ -167,7 +166,6 @@
     }
     /*字体超出不变行*/
     .error{
-
         height: 22px;
         color: red;
         font-size: 15px;
