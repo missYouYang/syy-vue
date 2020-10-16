@@ -15,16 +15,14 @@
                 <a-layout-header :style="{background: '#fff',height:'54px'}">
                     <tag-layout>    </tag-layout>
                 </a-layout-header>
-                <a-layout-content :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
+                <a-layout-content :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }" class="syy-content-class">
                     <router-view></router-view>
                 </a-layout-content>
                 <a-layout-footer style="textAlign: center">
                     Ant Design ©2018 Created by Ant UED
                 </a-layout-footer>
             </a-layout>
-
         </a-layout>
-
     </a-layout>
 </template>
 
@@ -56,7 +54,6 @@
             initial() {
 
                 console.log("main",this.$route.path);
-
                 if(this.$route.path == '/main'){
                     console.log("123");
                     this.$router.push("/home")
