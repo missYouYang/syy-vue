@@ -13,9 +13,11 @@
             </a-layout-header>
             <a-layout>
                 <a-layout-header :style="{background: '#fff',height:'54px'}">
-                    <tag-layout>    </tag-layout>
+                    <tag-layout></tag-layout>
                 </a-layout-header>
-                <a-layout-content :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }" class="syy-content-class">
+                <a-layout-content
+                        :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+                        class="syy-content-class">
                     <router-view></router-view>
                 </a-layout-content>
                 <a-layout-footer style="textAlign: center">
@@ -53,11 +55,11 @@
             },
             initial() {
 
-                console.log("main",this.$route.path);
-                if(this.$route.path == '/main'){
+                console.log("main", this.$route.path);
+                if (this.$route.path == '/main') {
                     console.log("123");
                     this.$router.push("/home")
-                }else{
+                } else {
                     console.log("12355");
                     this.$router.push(this.$route.path)
                 }
@@ -96,9 +98,12 @@
         color: #2c3033;
     }
 
+
 </style>
 
 <style lang="less">
-
+    body {
+        overflow-y: scroll;
+    }
 
 </style>

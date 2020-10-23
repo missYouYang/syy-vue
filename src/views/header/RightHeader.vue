@@ -3,7 +3,7 @@
         <span class="wel-head">
             <a-dropdown>
                 <a href="javascript:;" class="header-out action">
-                    <a-avatar size="small" src="http://minio.jeecg.com/otatest/temp/lgo33_1583397323099.png"/>
+                    <a-avatar size="small" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1603166363282&di=fdeba595c57100294a326d04f31d2d74&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fw%3D580%2Fsign%3D825d5c38c8fdfc03e578e3b0e43d87a9%2Fca80ea315c6034a8147e1247c01349540b2376f9.jpg"/>
                     <span @click="e => e.preventDefault()" class="m-right-5">
                         欢迎你,XXX
                     </span>

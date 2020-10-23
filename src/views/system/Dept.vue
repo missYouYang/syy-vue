@@ -1,99 +1,76 @@
 <template>
-    <a-form   layout="inline" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-row :gutter="24">
-            <a-col :md="8" :sm="24">
-                <a-form-item label="用户账号">
-                    <a-input placeholder="请输入用户账号" />
-                </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-                <a-form-item label="用户名称">
-                    <a-input placeholder="请输入用户名称" ></a-input>
-                </a-form-item>
-            </a-col>
-
-            <!--隐藏点击按钮时显示-->
-            <template v-if="true">
-                <a-col :md="8" :sm="24">
-                    <a-form-item label="性别" >
-                        <a-input placeholder="Basic usage"/>
-                    </a-form-item>
-                </a-col>
-                <a-col :md="8" :sm="24">
-                    <a-form-item label="手机号">
-                        <a-input placeholder="请输入手机号"/>
-                    </a-form-item>
-                </a-col>
-                <a-col :md="8" :sm="24">
-                    <a-form-item label="部门">
-                        <a-input placeholder="请输入部门" ></a-input>
-                    </a-form-item>
-                </a-col>
-                <a-col :md="8" :sm="24">
-                    <a-form-item label="用户状态">
-                        <a-input placeholder="用户状态" ></a-input>
-                    </a-form-item>
-                </a-col>
-            </template>
-
-        </a-row>
-    </a-form>
-
+    <div class="clearfix">
+        <a-upload
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                list-type="picture-card"
+                :file-list="fileList"
+                @preview="handlePreview"
+                @change="handleChange"
+                :showUploadList="disabled"
+        >
+            <img v-if="!disabled" :src="previewImage" alt="avatar" />
+            <div v-if="fileList.length <= 0">
+                <a-icon type="plus" />
+                <div class="ant-upload-text">
+                    Upload
+                </div>
+            </div>
+        </a-upload>
+        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+        </a-modal>
+    </div>
 </template>
-
 <script>
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
     export default {
-        name: "Dept",
         data() {
             return {
-                labelCol: {span: 4},
-                wrapperCol: {span: 14},
-                form: {
-                    name: '',
-                    region: undefined,
-                    date1: undefined,
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: '',
-                },
+                previewVisible: false,
+                previewImage: '',
+                disabled:true,
+                fileList: [
+                ],
             };
         },
         methods: {
-            onSubmit() {
-                console.log('submit!', this.form);
+            handleCancel() {
+                this.previewVisible = false;
+            },
+            async handlePreview(file) {
+                console.log("preview",file);
+                if (!file.url && !file.preview) {
+                    file.preview = await getBase64(file.originFileObj);
+                }
+                this.previewImage = file.url || file.preview;
+                this.previewVisible = true;
+            },
+            handleChange({ fileList }) {
+                console.log();
+                this.previewImage = "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
+                this.fileList = fileList;
+                this.disabled = false;
             },
         },
     };
 </script>
 
-<style lang="less">
-    /*    .ant-advanced-search-form {
-            padding: 24px;
-            background: #fbfbfb;
-            border: 1px solid #d9d9d9;
-            border-radius: 6px;
-        }
+<style>
+    /* you can make up upload button and sample style by using stylesheets */
+    .ant-upload-select-picture-card i {
+        font-size: 32px;
+        color: #999;
+    }
 
-        .ant-advanced-search-form .ant-form-item {
-            display: flex;
-        }
-
-        .ant-advanced-search-form .ant-form-item-control-wrapper {
-            flex: 1;
-        }*/
-
-    /*    #components-form-demo-advanced-search .ant-form {
-            max-width: none;
-        }*/
-    /*    #components-form-demo-advanced-search .search-result-list {
-            margin-top: 16px;
-            border: 1px dashed #e9e9e9;
-            border-radius: 6px;
-            background-color: #fafafa;
-            min-height: 200px;
-            text-align: center;
-            padding-top: 80px;
-        }*/
-    @import '../../assets/less/common.less';
+    .ant-upload-select-picture-card .ant-upload-text {
+        margin-top: 8px;
+        color: #666;
+    }
 </style>
