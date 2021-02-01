@@ -141,14 +141,14 @@
 
             </a-table>
         </div>
-        <user-model ref="userModel"></user-model>
+        <add-user-model ref="userModel"></add-user-model>
     </div>
 
 </template>
 
 <script>
 
-    import UserModel from "./modules/UserModel";
+    import AddUserModel from "./modules/AddUserModel";
 
     /*部门*/
     const options = [
@@ -303,7 +303,7 @@
             };
         },
         components: {
-            UserModel
+            AddUserModel
         },
         computed: {},
 

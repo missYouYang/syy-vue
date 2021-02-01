@@ -1,6 +1,6 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-        <div class="logo" style="text-align: center;line-height:32px;color:#fff;overflow:hidden">ERP管理系统</div>
+        <div class="logo" style="text-align: center;line-height:32px;color:#fff;overflow:hidden">小商城管理系统</div>
         <!--默认打开的-->
         <a-menu
                 :selected-keys="selectedKeys"

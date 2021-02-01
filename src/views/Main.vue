@@ -7,7 +7,7 @@
                 <div class="header">
                     <!--选择框-->
                     <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="ifOpen"/>
-                    <span>欢迎光临ERP管理系统</span>
+                    <span>欢迎光临小商品管理系统</span>
                     <right-header></right-header>
                 </div>
             </a-layout-header>

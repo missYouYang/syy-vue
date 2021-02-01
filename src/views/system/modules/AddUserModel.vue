@@ -4,9 +4,7 @@
             :width="720"
             :visible="visible"
             @close="onClose"
-            :destroyOnClose="true"
-
-    >
+            :destroyOnClose="true">
         <a-form-model :model="form" :label-col="labelCol" :wrapper-col="wrapperCol" :rules="rules" ref="ruleForm">
             <a-form-model-item label="用户账号" prop="userName">
                 <a-input v-model="form.userName" placeholder="请输入用户账号"/>
