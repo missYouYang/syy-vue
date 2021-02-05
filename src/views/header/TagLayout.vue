@@ -1,4 +1,5 @@
 <template>
+    <!--首页的标签页面-->
     <div>
         <a-tabs :active-key="activePage"
                 :hide-add="true"

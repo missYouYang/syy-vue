@@ -1,25 +1,38 @@
 <template>
+
+    <!--主页-->
     <a-layout id="components-layout-demo-custom-trigger" style="min-height: 100vh">
+
         <!--左侧菜单-->
         <left-menu ref="leftMenu"></left-menu>
+
+        <!--右侧-->
         <a-layout>
+            <!--右侧头-->
             <a-layout-header style="padding: 0;">
                 <div class="header">
                     <!--选择框-->
                     <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="ifOpen"/>
                     <span>欢迎光临小商品管理系统</span>
+                    <!--右侧-->
                     <right-header></right-header>
                 </div>
             </a-layout-header>
+
+            <!--右侧内容部分-->
             <a-layout>
+                <!--标签页-->
                 <a-layout-header :style="{background: '#fff',height:'54px'}">
                     <tag-layout></tag-layout>
                 </a-layout-header>
+                <!--内容-->
                 <a-layout-content
                         :style="{ margin: '15px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
                         class="syy-content-class">
                     <router-view></router-view>
                 </a-layout-content>
+
+                <!--底部-->
                 <a-layout-footer style="textAlign: center">
                     Ant Design ©2018 Created by Ant UED
                 </a-layout-footer>
@@ -40,7 +53,6 @@
             RightHeader,
             TagLayout
         },
-
         data() {
             return {
                 collapsed: false,
