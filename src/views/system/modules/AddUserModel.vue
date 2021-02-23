@@ -19,26 +19,28 @@
             <a-form-model-item label="密码确认" prop="rUserPassword">
                 <a-input v-model="form.rUserPassword" placeholder="请再次输入密码"/>
             </a-form-model-item>
-
+<!--  :customRequest="customRequest"    -->
             <a-form-model-item label="头像" prop="avatar" class="user-model-avatar">
                 <template>
-                    <div class="clearfix">
+                    <div class="">
                         <a-upload
-                                name="avatar"
                                 list-type="picture-card"
-                                class="avatar-uploader"
-                                :show-upload-list="false"
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                :file-list="fileList"
+                                @preview="handlePreview"
                                 @change="handleChange"
+                                :customRequest="selfUpload"
+                                :loading="uploading"
                         >
-                            <img v-if="imageUrl" :src="imageUrl" alt="avatar" style="height:104px;max-width:300px"/>
-                            <div v-else>
-                                <a-icon :type="loading ? 'loading' : 'plus'"/>
+                            <div v-if="fileList.length < 1">
+                                <a-icon type="plus" />
                                 <div class="ant-upload-text">
                                     Upload
                                 </div>
                             </div>
                         </a-upload>
+                        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                            <img alt="example" style="width: 100%" :src="previewImage" />
+                        </a-modal>
                     </div>
                 </template>
             </a-form-model-item>
@@ -84,10 +86,14 @@
 </template>
 
 <script>
-    function getBase64(img, callback) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            console.log("base64");
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
     }
 
     const options = [
@@ -142,8 +148,13 @@
         name: "UserModel",
         data() {
             return {
-                loading: false,
-                imageUrl: '',
+                /*图片*/
+                previewVisible: false,
+                previewImage: '',
+                fileList: [],
+                uploading: false,
+
+
                 visible: false,
                 labelCol: {span: 4},
                 wrapperCol: {span: 14},
@@ -185,20 +196,48 @@
             }
         },
         methods: {
-
-            handleChange(info) {
-                if (info.file.status === 'uploading') {
-                    this.loading = true;
-                    return;
-                }
-                if (info.file.status === 'done') {
-                    // Get this url from response in real world.
-                    getBase64(info.file.originFileObj, imageUrl => {
-                        this.imageUrl = imageUrl;
-                        this.loading = false;
-                    });
-                }
+            selfUpload({ file }) {
+                const base64 = new Promise(resolve => {
+                    const fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = () => {
+                        resolve(fileReader.result);
+                        this.previewImage = fileReader.result;
+                        console.log("123",this.previewImage)
+                    };
+                });
+                console.log(base64)
+       /*         const base64 = new Promise(resolve => {
+                    const fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = () => {
+                        resolve(fileReader.result);
+                        this.model.cover = fileReader.result;
+                    };
+                });*/
+                return base64;
             },
+            handleCancel() {
+                console.log("handCancel");
+                this.previewVisible = false;
+            },
+            async handlePreview(file) {
+                if (!file.url && !file.preview) {
+                    file.preview = await getBase64(file.originFileObj);
+                    console.log("preview",file.preview)
+                }
+                this.previewImage = file.url || file.preview;
+                this.previewVisible = true;
+                console.log("previewImage",this.previewImage)
+            },
+
+            handleChange({ fileList }) {
+                console.log("333434",fileList[0].thumbUrl);
+                console.log("333434",fileList);
+                this.fileList = fileList;
+            },
+
+
             showDrawer() {
                 this.visible = true;
             },

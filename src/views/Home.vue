@@ -6,11 +6,11 @@
                 <a-card title="总人数" :bordered="true" :head-style="{color:'#e8e218'}" :body-style="{color:'red'}">
                     <p>1670</p>
                 </a-card>
-                <a-card title="总人数" :bordered="true" :head-style="{color:'#e8e218'}" :body-style="{color:'red'}" >
-                    <p>1670</p>
+                <a-card title="在线人数" :bordered="true" :head-style="{color:'#e8e218'}" :body-style="{color:'red'}" >
+                    <p>500</p>
                 </a-card>
-                <a-card title="总人数" :bordered="true" :head-style="{color:'#e8e218'}" :body-style="{color:'red'}">
-                    <p>1670</p>
+                <a-card title="会员人数" :bordered="true" :head-style="{color:'#e8e218'}" :body-style="{color:'red'}">
+                    <p>800</p>
                 </a-card>
             </a-space>
         </div>
